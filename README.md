@@ -10,7 +10,8 @@ The system stores the following information about each patient:
 
 1- Room number.
 2- ID.
-3- Name
+3- Name.
 4- Status.
 
-1- ID: This is a unique 7-digit number. You cannot enter the same ID as an existing student.
+#Note
+ID: This is a unique 7-digit number. You cannot enter the same ID as an existing student.
