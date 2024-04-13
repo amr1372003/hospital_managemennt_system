@@ -88,9 +88,7 @@ start:
             scanf("%d", &back);
             goto start;
         }
-        
     }
-    
 }
 
 void add_room(room **list){
@@ -237,6 +235,7 @@ void update_patient_status(room **list, patient new_data, int location){
 }
 
 void display_patient_data(room **list, int location){
+    system("cls");
     int pos = location;
     room *this_room = NULL;
     this_room = *list;
@@ -244,6 +243,13 @@ void display_patient_data(room **list, int location){
         this_room = this_room -> next_room;
         pos--;
     }
-    printf("Patient name: %s \nPatient ID: %d \nPatient status: %s\n", this_room -> r_pationt.name, this_room -> r_pationt.id, this_room -> r_pationt.status);
+    if (this_room -> r_pationt.id != 0){
+        printf("Patient name: %s \nPatient ID: %d \nPatient status: %s\n", this_room -> r_pationt.name, this_room -> r_pationt.id, this_room -> r_pationt.status);
+    }
+    else{
+        printf(ANSI_COLOR_RED);
+        printf("invaled ID\n");
+        printf(ANSI_COLOR_RESET);
+    }
 }
 
