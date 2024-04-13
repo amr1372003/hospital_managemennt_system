@@ -3,39 +3,98 @@
 int num_of_rooms = 0;
 
 int main(){
-    room room1;
-    patient pat1;
-    pat1.id = 123;
-    pat1.name[0] = 'a';
-    pat1.status[0] = 'd';
-    //room1.r_pationt.id = pat1.id;
-    //printf("%d\n", room1.r_pationt.id);
+    system("cls");
+    room rooms;
+    patient patients;
+    int state = 0, room_num = 0, patient_id = 0, back = 0;
     printf("how many rooms in your hospital : ");
     scanf("%d", &num_of_rooms);
     add_room(&head);
-    reserv(&head, pat1, 1);
-    display_patient_data(&head, search_patient(&head,123));
+    _sleep(500);
+    while (state != 7){
+start:
+        system("cls");
+        printf("choose function : \n1) Check empty rooms.\n2) Make a reservation.\n3) Remove a reservation.\n4) Search for a patient.\n5) Update patient status.\n6) Display patient data\n7) Exit");
+        printf("enter your choice : ");
+        scanf("%d", &state);
 
-    //printf("%d\n", search_patient(&head,123));
-    //printf("%d", pat1.id);
-    
-    //remove_current_reservation(&head, 2);
-    //printf("%d\n", search_patient(&head,123));
-    /*reserv(&head, 1);
-    check_empty_rooms(head);
-    printf("-----------\n");
-    for (int i = 1; i <= 5; i++){
-        reserv(&head, i);
-        check_empty_rooms(head);
-        printf("-----------\n");
+        if (state == 1){
+            check_empty_rooms(&head);
+            printf("to go back press 1 : ");
+            scanf("%d", &back);
+            goto start;
+        }else if(state == 2){
+            system("cls");
+            printf("which room you would like to reserv : ");
+            scanf("%d", &room_num);
+            printf("patient ID : ");
+            scanf("%d", &patients.id);
+            printf("patient name : ");
+            scanf("%s", &patients.name);
+            printf("patient status : ");
+            scanf("%s", &patients.status);
+            reserv(&head, patients, room_num);
+            printf("to go back press 1 : ");
+            scanf("%d", &back);
+            goto start;
+        }else if(state == 3){
+            system("cls");
+            printf("which room you would like to remove its reservation : ");
+            scanf("%d", &room_num);
+            remove_current_reservation(&head, room_num);
+            printf("to go back press 1 : ");
+            scanf("%d", &back);
+            goto start;
+        }else if(state == 4){
+            system("cls");
+            printf("please enter pation ID : ");
+            scanf("%d", &patient_id);
+            room_num = search_patient(&head, patient_id);
+            if (room_num == 0)
+            {
+                printf(ANSI_COLOR_RED);
+                printf("invaled ID\n");
+                printf(ANSI_COLOR_RESET);
+            }else{
+                printf("your pationt is in room %d \n", room_num);
+            }
+            printf("to go back press 1 : ");
+            scanf("%d", &back);
+            goto start;
+        }else if(state == 5){
+            system("cls");
+            printf("please enter pation ID : ");
+            scanf("%d", &patient_id);
+            room_num = search_patient(&head, patient_id);
+            if (search_patient(&head, patient_id) == 0){
+                printf(ANSI_COLOR_RED);
+                printf("invaled ID\n");
+                printf(ANSI_COLOR_RESET);
+            }else{
+                printf("patient new status : ");
+                scanf("%s", &patients.status);
+                update_patient_status(&head, patients, room_num);
+            }
+            printf("to go back press 1 : ");
+            scanf("%d", &back);
+            goto start;
+        }else if(state == 6){
+            system("cls");
+            printf("please enter pation ID : ");
+            scanf("%d", &patient_id);
+            room_num = search_patient(&head, patient_id);
+            display_patient_data(&head, room_num);
+            printf("to go back press 1 : ");
+            scanf("%d", &back);
+            goto start;
+        }
+        
     }
-    remove_current_reservation(&head, 1);
-    check_empty_rooms(head);
-    remove_current_reservation(&head, 1);*/
+    
 }
 
 void add_room(room **list){
-    //system("cls");
+    system("cls");
     room *temp = NULL;
     int i = num_of_rooms;
     while (i){
@@ -66,21 +125,22 @@ void add_room(room **list){
     printf(ANSI_COLOR_RESET);
 }
 
-void check_empty_rooms(room *list){
-    //system("cls");
-    room *temp = list;
+void check_empty_rooms(room **list){
+    system("cls");
+    room *temp = *list;
     int rooms_count = 0;
     printf("empty rooms : \n");
     while (temp){
         if (temp -> occupation == 0){
-            printf("%d\n", temp -> room_num);
+            printf("%d | ", temp -> room_num);
             rooms_count++;
         }
         temp = temp -> next_room;
     }
     if(rooms_count == 0){
-        printf("NAN\n");
+        printf("NONE");
     }
+    printf("\n");
 }
 
 void reserv(room **list, patient data, int room_number){
@@ -103,6 +163,9 @@ void reserv(room **list, patient data, int room_number){
                 temp -> r_pationt.name[i] = data.name[i];
                 temp -> r_pationt.status[i] = data.status[i];
             }
+            printf(ANSI_COLOR_GREEN);
+            printf("DONE\n");
+            printf(ANSI_COLOR_RESET);
         }else{
             printf(ANSI_COLOR_RED);
             printf("invaled room\n");
@@ -133,6 +196,9 @@ void remove_current_reservation(room **list, int room_number){
                 temp -> r_pationt.name[i] = '\0';
                 temp -> r_pationt.status[i] = '\0';
             }
+            printf(ANSI_COLOR_GREEN);
+            printf("DONE\n");
+            printf(ANSI_COLOR_RESET);
         }else{
             printf(ANSI_COLOR_RED);
             printf("invaled room\n");
@@ -167,13 +233,10 @@ void update_patient_status(room **list, patient new_data, int location){
         for (int i = 0; i < 50; i++){
             temp -> r_pationt.status[i] = new_data.status[i];
         }
-    }else{
-        printf("invaled id\n");
     }
 }
 
 void display_patient_data(room **list, int location){
-    //system("cls");
     int pos = location;
     room *this_room = NULL;
     this_room = *list;

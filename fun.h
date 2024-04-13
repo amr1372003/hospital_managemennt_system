@@ -24,7 +24,7 @@
     room *head = NULL;
 
     void add_room(room **list);
-    void check_empty_rooms(room *list);
+    void check_empty_rooms(room **list);
     void reserv(room **list, patient data, int room_number);
     void remove_current_reservation(room **list, int room_number);
     int search_patient(room **list, int id);
