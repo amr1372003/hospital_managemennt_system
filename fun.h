@@ -3,6 +3,8 @@
     #include <stdio.h>
     #include <stdlib.h>
     #include <string.h>
+    #include <windows.h>
+
     #define ANSI_COLOR_RED     "\x1b[31m"
     #define ANSI_COLOR_GREEN   "\x1b[32m"
     #define ANSI_COLOR_RESET   "\x1b[0m"
@@ -16,8 +18,8 @@
     typedef struct Rooms{
         int occupation;
         int room_num;
-        struct room *priv_room;
-        struct room *next_room;
+        struct Rooms *priv_room;
+        struct Rooms *next_room;
         patient r_pationt;
     }room;
 

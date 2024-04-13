@@ -10,7 +10,7 @@ int main(){
     printf("how many rooms in your hospital : ");
     scanf("%d", &num_of_rooms);
     add_room(&head);
-    _sleep(250);
+    Sleep(250);
     while (state != 7){
 start:
         system("cls");
