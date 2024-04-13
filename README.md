@@ -8,10 +8,10 @@ This is a hospital management system that enables hospital staff to perform 6 op
 
 The system stores the following information about each patient:
 
-1- Room number.
-2- ID.
-3- Name.
-4- Status.
+1) Room number.
+2) ID.
+3) Name.
+4) Status.
 
-#Note
-ID: This is a unique 7-digit number. You cannot enter the same ID as an existing student.
+# Note :
+  ID: This is a unique 7-digit number. You cannot enter the same ID as an existing student.
