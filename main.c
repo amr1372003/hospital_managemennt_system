@@ -10,17 +10,17 @@ int main(){
     printf("how many rooms in your hospital : ");
     scanf("%d", &num_of_rooms);
     add_room(&head);
-    _sleep(500);
+    _sleep(250);
     while (state != 7){
 start:
         system("cls");
-        printf("choose function : \n1) Check empty rooms.\n2) Make a reservation.\n3) Remove a reservation.\n4) Search for a patient.\n5) Update patient status.\n6) Display patient data\n7) Exit");
+        printf("choose function : \n1) Check empty rooms.\n2) Make a reservation.\n3) Remove a reservation.\n4) Search for a patient.\n5) Update patient status.\n6) Display patient data\n7) Exit\n");
         printf("enter your choice : ");
         scanf("%d", &state);
 
         if (state == 1){
             check_empty_rooms(&head);
-            printf("to go back press 1 : ");
+            printf("1) Back : ");
             scanf("%d", &back);
             goto start;
         }else if(state == 2){
@@ -29,12 +29,21 @@ start:
             scanf("%d", &room_num);
             printf("patient ID : ");
             scanf("%d", &patients.id);
-            printf("patient name : ");
-            scanf("%s", &patients.name);
-            printf("patient status : ");
-            scanf("%s", &patients.status);
-            reserv(&head, patients, room_num);
-            printf("to go back press 1 : ");
+            if(check_id(patients.id) == 0){
+                printf(ANSI_COLOR_RED);
+                printf("invaled ID\n");
+                printf(ANSI_COLOR_RESET);
+                printf("1) Back : ");
+                scanf("%d", &back);
+                goto start;
+            }else{
+                printf("patient name : ");
+                scanf("%s", &patients.name);
+                printf("patient status : ");
+                scanf("%s", &patients.status);
+                reserv(&head, patients, room_num);
+            }
+            printf("1) Back : ");
             scanf("%d", &back);
             goto start;
         }else if(state == 3){
@@ -42,7 +51,7 @@ start:
             printf("which room you would like to remove its reservation : ");
             scanf("%d", &room_num);
             remove_current_reservation(&head, room_num);
-            printf("to go back press 1 : ");
+            printf("1) Back : ");
             scanf("%d", &back);
             goto start;
         }else if(state == 4){
@@ -58,7 +67,7 @@ start:
             }else{
                 printf("your pationt is in room %d \n", room_num);
             }
-            printf("to go back press 1 : ");
+            printf("1) Back : ");
             scanf("%d", &back);
             goto start;
         }else if(state == 5){
@@ -75,7 +84,7 @@ start:
                 scanf("%s", &patients.status);
                 update_patient_status(&head, patients, room_num);
             }
-            printf("to go back press 1 : ");
+            printf("1) Back : ");
             scanf("%d", &back);
             goto start;
         }else if(state == 6){
@@ -84,7 +93,7 @@ start:
             scanf("%d", &patient_id);
             room_num = search_patient(&head, patient_id);
             display_patient_data(&head, room_num);
-            printf("to go back press 1 : ");
+            printf("1) Back : ");
             scanf("%d", &back);
             goto start;
         }
@@ -243,13 +252,21 @@ void display_patient_data(room **list, int location){
         this_room = this_room -> next_room;
         pos--;
     }
-    if (this_room -> r_pationt.id != 0){
+    if (this_room -> r_pationt.id != 0 && this_room -> occupation != 0 && location != 0){
         printf("Patient name: %s \nPatient ID: %d \nPatient status: %s\n", this_room -> r_pationt.name, this_room -> r_pationt.id, this_room -> r_pationt.status);
     }
     else{
         printf(ANSI_COLOR_RED);
         printf("invaled ID\n");
         printf(ANSI_COLOR_RESET);
+    }
+}
+
+int check_id(int id){
+    if (id < 1000000 || id > 9999999){
+        return 0;
+    }else{
+        return 1;
     }
 }
 

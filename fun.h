@@ -30,5 +30,6 @@
     int search_patient(room **list, int id);
     void update_patient_status(room **list, patient new_data, int location);
     void display_patient_data(room **list, int location);
+    int check_id(int id);
 
 #endif
