@@ -135,13 +135,16 @@ void add_room(room **list){
 void check_empty_rooms(room **list){
     system("cls");
     room *temp = *list;
-    int rooms_count = 0;
+    int rooms_count = 0, i = 1;
     printf("empty rooms : \n");
     while (temp){
         if (temp -> occupation == 0){
-            printf("%d | ", temp -> room_num);
+            printf("| %d | ", temp -> room_num);
             rooms_count++;
         }
+        if (i % 5 == 0)
+            printf("\n");
+        i++;
         temp = temp -> next_room;
     }
     if(rooms_count == 0){
